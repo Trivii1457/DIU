@@ -1,0 +1,11 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Variables CSS personalizadas */
+:root {
+  --color-primary: #2563EB;
+  --color-success: #22C55E;
+}
