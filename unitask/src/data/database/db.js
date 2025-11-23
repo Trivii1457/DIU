@@ -76,7 +76,7 @@ export const initializeDatabase = async () => {
           subjectId: subjectIds[0],
           priority: 'medium',
           dueDate: new Date(Date.now() + 5 * 24 * 60 * 60 * 1000),
-          completed: false,
+          completed: true,
           createdAt: new Date(),
           updatedAt: new Date()
         },
@@ -87,6 +87,76 @@ export const initializeDatabase = async () => {
           priority: 'high',
           dueDate: new Date(Date.now() + 3 * 24 * 60 * 60 * 1000),
           completed: false,
+          createdAt: new Date(),
+          updatedAt: new Date()
+        },
+        {
+          title: 'Crear wireframes',
+          description: 'Wireframes de baja fidelidad',
+          subjectId: subjectIds[0],
+          priority: 'medium',
+          dueDate: new Date(Date.now() - 2 * 24 * 60 * 60 * 1000),
+          completed: true,
+          createdAt: new Date(),
+          updatedAt: new Date()
+        },
+        {
+          title: 'Implementar autenticación',
+          description: 'Sistema de login con JWT',
+          subjectId: subjectIds[1],
+          priority: 'high',
+          dueDate: new Date(Date.now() - 1 * 24 * 60 * 60 * 1000),
+          completed: false,
+          createdAt: new Date(),
+          updatedAt: new Date()
+        },
+        {
+          title: 'Optimizar consultas SQL',
+          description: 'Mejorar rendimiento de la base de datos',
+          subjectId: subjectIds[2],
+          priority: 'medium',
+          dueDate: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000),
+          completed: true,
+          createdAt: new Date(),
+          updatedAt: new Date()
+        },
+        {
+          title: 'Diseñar sistema de colores',
+          description: 'Paleta de colores para la app',
+          subjectId: subjectIds[0],
+          priority: 'low',
+          dueDate: new Date(Date.now() - 5 * 24 * 60 * 60 * 1000),
+          completed: true,
+          createdAt: new Date(),
+          updatedAt: new Date()
+        },
+        {
+          title: 'Configurar CI/CD',
+          description: 'Pipeline de integración continua',
+          subjectId: subjectIds[1],
+          priority: 'medium',
+          dueDate: new Date(Date.now() + 10 * 24 * 60 * 60 * 1000),
+          completed: false,
+          createdAt: new Date(),
+          updatedAt: new Date()
+        },
+        {
+          title: 'Modelar base de datos',
+          description: 'Crear diagrama ER',
+          subjectId: subjectIds[2],
+          priority: 'high',
+          dueDate: new Date(Date.now() - 3 * 24 * 60 * 60 * 1000),
+          completed: false,
+          createdAt: new Date(),
+          updatedAt: new Date()
+        },
+        {
+          title: 'Pruebas de usabilidad',
+          description: 'Realizar testing con usuarios',
+          subjectId: subjectIds[0],
+          priority: 'high',
+          dueDate: new Date(Date.now() + 1 * 24 * 60 * 60 * 1000),
+          completed: true,
           createdAt: new Date(),
           updatedAt: new Date()
         }

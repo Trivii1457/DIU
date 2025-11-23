@@ -15,8 +15,8 @@ export const Card = ({
   hover = false,
   ...props 
 }) => {
-  const baseStyles = 'bg-surface-light dark:bg-surface-dark rounded-card shadow-soft p-4 transition-all duration-200';
-  const hoverStyles = hover ? 'hover:shadow-medium cursor-pointer' : '';
+  const baseStyles = 'bg-dark-700 rounded-card shadow-dark border border-dark-500 p-4 transition-all duration-200';
+  const hoverStyles = hover ? 'hover:bg-dark-600 hover:border-dark-400 cursor-pointer' : '';
   
   return (
     <div

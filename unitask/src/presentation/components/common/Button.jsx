@@ -20,14 +20,14 @@ export const Button = ({
   type = 'button',
   ...props 
 }) => {
-  const baseStyles = 'inline-flex items-center justify-center font-medium rounded-lg transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed';
+  const baseStyles = 'inline-flex items-center justify-center font-medium rounded-lg transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-dark-900 disabled:opacity-50 disabled:cursor-not-allowed';
   
   const variants = {
-    primary: 'bg-primary-500 text-white hover:bg-primary-600 focus:ring-primary-500',
-    secondary: 'bg-gray-200 text-gray-800 hover:bg-gray-300 focus:ring-gray-400 dark:bg-gray-700 dark:text-gray-200 dark:hover:bg-gray-600',
-    success: 'bg-success-500 text-white hover:bg-success-600 focus:ring-success-500',
-    danger: 'bg-red-500 text-white hover:bg-red-600 focus:ring-red-500',
-    outline: 'border-2 border-primary-500 text-primary-500 hover:bg-primary-50 focus:ring-primary-500',
+    primary: 'bg-accent-500 text-white hover:bg-accent-600 focus:ring-accent-500 shadow-md',
+    secondary: 'bg-dark-500 text-gray-100 hover:bg-dark-400 focus:ring-dark-400 border border-dark-400',
+    success: 'bg-success-500 text-white hover:bg-success-600 focus:ring-success-500 shadow-md',
+    danger: 'bg-danger-500 text-white hover:bg-danger-600 focus:ring-danger-500 shadow-md',
+    outline: 'border-2 border-accent-500 text-accent-400 hover:bg-dark-700 focus:ring-accent-500',
   };
   
   const sizes = {
