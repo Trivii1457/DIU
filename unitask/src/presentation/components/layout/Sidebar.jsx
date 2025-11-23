@@ -1,9 +1,7 @@
-import { useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { useAuth } from '../../../context/AuthContext';
 
-const Sidebar = () => {
-  const [isCollapsed, setIsCollapsed] = useState(false);
+const Sidebar = ({ isCollapsed, onToggleCollapse }) => {
   const location = useLocation();
   const { user, logout } = useAuth();
 
@@ -57,7 +55,7 @@ const Sidebar = () => {
               </div>
             )}
             <button
-              onClick={() => setIsCollapsed(!isCollapsed)}
+              onClick={onToggleCollapse}
               className="p-2 hover:bg-dark-700 rounded-lg text-gray-400 hover:text-gray-300 transition-colors"
               title={isCollapsed ? 'Expandir' : 'Contraer'}
             >
