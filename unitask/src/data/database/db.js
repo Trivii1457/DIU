@@ -8,14 +8,16 @@ class UniTaskDatabase extends Dexie {
     super('UniTaskDB');
     
     // Definición del esquema de la base de datos
-    this.version(1).stores({
+    this.version(2).stores({
       tasks: '++id, title, subjectId, priority, dueDate, completed, createdAt, updatedAt',
-      subjects: '++id, name, color, archived, createdAt'
+      subjects: '++id, name, color, archived, createdAt',
+      users: '++id, username, email, createdAt'
     });
 
     // Mapeo de las tablas a clases
     this.tasks = this.table('tasks');
     this.subjects = this.table('subjects');
+    this.users = this.table('users');
   }
 }
 
@@ -29,6 +31,19 @@ export const initializeDatabase = async () => {
   try {
     // Verificar si ya hay datos
     const subjectsCount = await db.subjects.count();
+    const usersCount = await db.users.count();
+    
+    // Initialize demo user if no users exist
+    if (usersCount === 0) {
+      console.log('Creando usuario de demostración...');
+      await db.users.add({
+        username: 'demo',
+        name: 'Usuario Demo',
+        email: 'demo@unitask.com',
+        password: 'demo123',
+        createdAt: new Date()
+      });
+    }
     
     if (subjectsCount === 0) {
       console.log('Inicializando base de datos con datos de ejemplo...');
@@ -38,21 +53,21 @@ export const initializeDatabase = async () => {
         {
           name: 'Diseño de Interfaces',
           color: '#2563EB',
-          icon: 'palette',
+          icon: '🎨',
           archived: false,
           createdAt: new Date()
         },
         {
           name: 'Programación Web',
           color: '#16a34a',
-          icon: 'code',
+          icon: '💻',
           archived: false,
           createdAt: new Date()
         },
         {
           name: 'Bases de Datos',
           color: '#dc2626',
-          icon: 'database',
+          icon: '🗄️',
           archived: false,
           createdAt: new Date()
         }
