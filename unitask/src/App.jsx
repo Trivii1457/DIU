@@ -11,7 +11,7 @@ function App() {
 
   return (
     <Router>
-      <div className="min-h-screen bg-background-light dark:bg-background-dark">
+      <div className="min-h-screen bg-dark-900">
         <HomePage />
       </div>
     </Router>
