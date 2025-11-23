@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { TaskRepository, SubjectRepository } from '../../data/repositories';
 import { Button, Card } from '../components/common';
 import { formatDate } from '../../infrastructure/utils/helpers';
+import TaskFormModal from '../components/tasks/TaskFormModal';
 
 const HomePage = () => {
   const [tasks, setTasks] = useState([]);
@@ -9,6 +10,7 @@ const HomePage = () => {
   const [stats, setStats] = useState(null);
   const [loading, setLoading] = useState(true);
   const [showStatistics, setShowStatistics] = useState(false);
+  const [showTaskForm, setShowTaskForm] = useState(false);
 
   useEffect(() => {
     loadData();
@@ -348,9 +350,20 @@ const HomePage = () => {
         )}
 
         {/* Botón flotante */}
-        <button className="fixed bottom-6 right-6 w-14 h-14 bg-accent-500 text-white rounded-full shadow-dark hover:bg-accent-600 transition-all flex items-center justify-center text-2xl hover:scale-110">
+        <button 
+          onClick={() => setShowTaskForm(true)}
+          className="fixed bottom-6 right-6 w-14 h-14 bg-accent-500 text-white rounded-full shadow-dark hover:bg-accent-600 transition-all flex items-center justify-center text-2xl hover:scale-110"
+        >
           +
         </button>
+
+        {/* Task Form Modal */}
+        <TaskFormModal
+          isOpen={showTaskForm}
+          onClose={() => setShowTaskForm(false)}
+          onTaskCreated={loadData}
+          subjects={subjects}
+        />
       </div>
     </div>
   );
