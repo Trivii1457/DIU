@@ -1,4 +1,5 @@
 import pg from 'pg';
+import bcrypt from 'bcryptjs';
 const { Pool } = pg;
 
 const pool = new Pool({
@@ -50,9 +51,10 @@ export const initializeDatabase = async () => {
     const usersResult = await pool.query('SELECT COUNT(*) FROM users');
     if (parseInt(usersResult.rows[0].count) === 0) {
       console.log('Creating demo user...');
+      const hashedPassword = await bcrypt.hash('demo123', 10);
       await pool.query(
         `INSERT INTO users (username, name, email, password) VALUES ($1, $2, $3, $4)`,
-        ['demo', 'Usuario Demo', 'demo@unitask.com', 'demo123']
+        ['demo', 'Usuario Demo', 'demo@unitask.com', hashedPassword]
       );
     }
 

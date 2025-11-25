@@ -137,13 +137,16 @@ router.get('/stats/summary', async (req, res) => {
 // Create task
 router.post('/', async (req, res) => {
   try {
-    const { title, description, subject_id, subjectId, priority, due_date, dueDate, completed } = req.body;
-    const actualSubjectId = subject_id || subjectId;
-    const actualDueDate = due_date || dueDate;
+    const { title, description, subject_id, priority, due_date, completed } = req.body;
+    
+    // Validate required fields
+    if (!title) {
+      return res.status(400).json({ error: 'Title is required' });
+    }
     
     const result = await query(
       'INSERT INTO tasks (title, description, subject_id, priority, due_date, completed) VALUES ($1, $2, $3, $4, $5, $6) RETURNING *',
-      [title, description || '', actualSubjectId, priority || 'medium', actualDueDate, completed || false]
+      [title, description || '', subject_id || null, priority || 'medium', due_date || null, completed || false]
     );
     res.status(201).json(result.rows[0]);
   } catch (error) {
@@ -155,9 +158,7 @@ router.post('/', async (req, res) => {
 // Update task
 router.put('/:id', async (req, res) => {
   try {
-    const { title, description, subject_id, subjectId, priority, due_date, dueDate, completed } = req.body;
-    const actualSubjectId = subject_id !== undefined ? subject_id : subjectId;
-    const actualDueDate = due_date !== undefined ? due_date : dueDate;
+    const { title, description, subject_id, priority, due_date, completed } = req.body;
     
     const result = await query(
       `UPDATE tasks SET 
@@ -169,7 +170,7 @@ router.put('/:id', async (req, res) => {
         completed = COALESCE($6, completed),
         updated_at = CURRENT_TIMESTAMP 
       WHERE id = $7 RETURNING *`,
-      [title, description, actualSubjectId, priority, actualDueDate, completed, req.params.id]
+      [title, description, subject_id, priority, due_date, completed, req.params.id]
     );
     if (result.rows.length === 0) {
       return res.status(404).json({ error: 'Task not found' });

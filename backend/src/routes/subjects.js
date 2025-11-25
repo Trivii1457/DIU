@@ -82,9 +82,15 @@ router.get('/:id/progress', async (req, res) => {
 router.post('/', async (req, res) => {
   try {
     const { name, color, icon, archived } = req.body;
+    
+    // Validate required fields
+    if (!name || name.trim() === '') {
+      return res.status(400).json({ error: 'Name is required' });
+    }
+    
     const result = await query(
       'INSERT INTO subjects (name, color, icon, archived) VALUES ($1, $2, $3, $4) RETURNING *',
-      [name, color || '#2563EB', icon || 'book', archived || false]
+      [name.trim(), color || '#2563EB', icon || 'book', archived || false]
     );
     res.status(201).json(result.rows[0]);
   } catch (error) {
