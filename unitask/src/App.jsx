@@ -1,7 +1,5 @@
-import { useEffect } from 'react';
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import { AuthProvider, useAuth } from './context/AuthContext';
-import { initializeDatabase } from './data/database/db';
 
 // Pages
 import LoginPage from './presentation/pages/LoginPage';
@@ -114,11 +112,6 @@ const AppRoutes = () => {
 };
 
 function App() {
-  useEffect(() => {
-    // Inicializar la base de datos al cargar la aplicación
-    initializeDatabase();
-  }, []);
-
   return (
     <Router>
       <AuthProvider>
