@@ -1,84 +1,144 @@
 # 🎓 UniTask - PWA para Gestión de Tareas Académicas
 
-PWA moderna y responsive para la gestión eficiente de tareas y proyectos académicos, desarrollada con React, Vite, Tailwind CSS e IndexedDB.
+PWA moderna y responsive para la gestión eficiente de tareas y proyectos académicos, desarrollada con React, Vite, Tailwind CSS y PostgreSQL.
+
+## 🐳 Ejecución con Docker (Recomendado)
+
+La forma más fácil de ejecutar el proyecto es usando Docker Compose:
+
+```bash
+# Construir e iniciar todos los servicios
+docker-compose up --build
+
+# Ejecutar en segundo plano
+docker-compose up -d --build
+
+# Ver logs
+docker-compose logs -f
+
+# Detener todos los servicios
+docker-compose down
+
+# Detener y eliminar datos
+docker-compose down -v
+```
+
+Una vez iniciado, accede a:
+- **Frontend:** http://localhost
+- **Backend API:** http://localhost:3001/api
+- **PostgreSQL:** localhost:5432
+
+### Credenciales de Demo
+- **Usuario:** demo
+- **Contraseña:** demo123
 
 ## 🏗️ Arquitectura del Proyecto
 
-El proyecto está organizado por capas siguiendo principios de Clean Architecture:
+El proyecto está organizado en tres servicios principales:
 
 ```
-src/
-├── 📱 presentation/          # Capa de Presentación (UI/UX)
-│   ├── components/
-│   │   ├── common/          # Componentes reutilizables
-│   │   ├── tasks/           # Componentes de tareas
-│   │   └── subjects/        # Componentes de materias
-│   ├── layouts/             # Layouts de la aplicación
-│   └── pages/               # Páginas/Vistas principales
+.
+├── backend/                 # API REST con Node.js/Express
+│   ├── src/
+│   │   ├── db/             # Conexión y configuración de PostgreSQL
+│   │   ├── routes/         # Rutas de la API
+│   │   └── index.js        # Servidor Express
+│   └── Dockerfile
 │
-├── 🧠 application/           # Lógica de Aplicación
-│   ├── hooks/               # Custom hooks de React
-│   ├── services/            # Servicios de aplicación
-│   └── store/               # Estado global (context/zustand)
+├── unitask/                # Frontend React PWA
+│   ├── src/
+│   │   ├── presentation/   # Componentes y páginas UI
+│   │   ├── data/          # Modelos y repositorios
+│   │   ├── context/       # Contexto de React (Auth)
+│   │   └── infrastructure/ # Cliente API
+│   └── Dockerfile
 │
-├── 🗄️ data/                 # Capa de Datos
-│   ├── database/            # Configuración de IndexedDB
-│   ├── models/              # Modelos de datos
-│   └── repositories/        # Repositorios (CRUD)
-│
-└── ⚙️ infrastructure/        # Infraestructura
-    ├── config/              # Configuraciones
-    ├── pwa/                 # Service Workers y PWA
-    └── utils/               # Utilidades y helpers
+└── docker-compose.yml      # Orquestación de servicios
 ```
+
+### Servicios Docker
+- **postgres:** Base de datos PostgreSQL 16 (Alpine)
+- **backend:** API REST Node.js 22 (Alpine)
+- **frontend:** React + Nginx (Alpine)
 
 ## 🚀 Tecnologías
 
-- **Frontend:** React 18 + Vite
+- **Frontend:** React 19 + Vite
+- **Backend:** Node.js + Express
+- **Base de Datos:** PostgreSQL 16
 - **Estilos:** Tailwind CSS
-- **Base de Datos:** IndexedDB (con Dexie.js)
 - **PWA:** vite-plugin-pwa + Workbox
 - **Routing:** React Router DOM
-- **Utilidades:** date-fns, clsx
+- **Contenedores:** Docker + Docker Compose (Alpine images)
 
-## 📦 Instalación
+## 📦 Desarrollo Local (Sin Docker)
+
+### Backend
 
 ```bash
-# Instalar dependencias
+cd backend
 npm install
 
-# Ejecutar en modo desarrollo
+# Asegúrate de tener PostgreSQL corriendo localmente
+# Configura las variables de entorno:
+export DB_HOST=localhost
+export DB_PORT=5432
+export DB_NAME=unitask
+export DB_USER=unitask
+export DB_PASSWORD=unitask
+
 npm run dev
-
-# Compilar para producción
-npm run build
-
-# Preview de producción
-npm run preview
 ```
 
-## ✨ Características Implementadas
+### Frontend
 
-### ✅ Fase 1 - Base del Proyecto
-- [x] Estructura de carpetas por capas
-- [x] Configuración de Tailwind CSS
-- [x] Configuración PWA con Workbox
-- [x] Base de datos IndexedDB con Dexie
-- [x] Modelos de datos (Task, Subject)
-- [x] Repositorios CRUD completos
-- [x] Componentes UI base (Button, Card, Input, etc.)
-- [x] Página de inicio funcional
-- [x] Sistema de estadísticas
+```bash
+cd unitask
+npm install
+npm run dev
+```
 
-### 🔜 Próximas Fases
-- [ ] Sistema de autenticación
-- [ ] Vista de calendario
-- [ ] Sistema de notificaciones
-- [ ] Modo oscuro/claro
-- [ ] Filtros y búsqueda avanzada
-- [ ] Drag & drop para tareas
-- [ ] Sincronización en la nube
-- [ ] Integración con Google Calendar
+## 🗄️ Base de Datos
+
+### Tablas
+- **users:** Almacena usuarios del sistema
+- **subjects:** Almacena las materias/cursos
+- **tasks:** Almacena todas las tareas (con FK a subjects)
+
+### API Endpoints
+
+#### Users
+- `GET /api/users` - Listar usuarios
+- `POST /api/users` - Crear usuario
+- `POST /api/users/authenticate` - Autenticar usuario
+
+#### Subjects
+- `GET /api/subjects` - Listar materias
+- `GET /api/subjects/active` - Listar materias activas
+- `POST /api/subjects` - Crear materia
+- `PUT /api/subjects/:id` - Actualizar materia
+- `DELETE /api/subjects/:id` - Eliminar materia
+
+#### Tasks
+- `GET /api/tasks` - Listar tareas
+- `GET /api/tasks/filter/pending` - Tareas pendientes
+- `GET /api/tasks/filter/completed` - Tareas completadas
+- `GET /api/tasks/stats/summary` - Estadísticas
+- `POST /api/tasks` - Crear tarea
+- `PUT /api/tasks/:id` - Actualizar tarea
+- `DELETE /api/tasks/:id` - Eliminar tarea
+
+## ✨ Características
+
+- ✅ Gestión completa de tareas (CRUD)
+- ✅ Gestión de materias/cursos
+- ✅ Sistema de autenticación
+- ✅ Vista de calendario
+- ✅ Estadísticas de progreso
+- ✅ Base de datos relacional (PostgreSQL)
+- ✅ API REST completa
+- ✅ Dockerizado con imágenes Alpine
+- ✅ PWA instalable y offline
 
 ## 🎨 Sistema de Diseño
 
@@ -87,42 +147,6 @@ npm run preview
 - **Success:** #22C55E (Verde)
 - **Background Light:** #F9FAFB
 - **Background Dark:** #111827
-
-### Tipografía
-- **Fuente:** Inter (Google Fonts)
-- **Pesos:** 300, 400, 500, 600, 700
-
-## 📱 PWA Features
-
-- ✅ Instalable como app nativa
-- ✅ Funciona offline
-- ✅ Caché inteligente con Workbox
-- ✅ Actualización automática
-- 🔜 Notificaciones push
-- 🔜 Sincronización en background
-
-## 🗄️ Base de Datos
-
-La aplicación utiliza IndexedDB para almacenamiento local persistente:
-
-### Tablas
-- **tasks:** Almacena todas las tareas
-- **subjects:** Almacena las materias/cursos
-
-### Características
-- CRUD completo
-- Consultas optimizadas
-- Índices para búsquedas rápidas
-- Datos de ejemplo precargados
-
-## 🛠️ Scripts Disponibles
-
-```bash
-npm run dev          # Servidor de desarrollo
-npm run build        # Compilar para producción
-npm run preview      # Preview de producción
-npm run lint         # Linter de código
-```
 
 ## 📄 Licencia
 
