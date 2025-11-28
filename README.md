@@ -1,6 +1,5 @@
-# 📚 Proyecto: PWA para Gestión de Tareas Académicas
-**Nombre tentativo:** UniTask, StudyFlow, o FocusU  
-**Tipo:** PWA Responsive  
+# 📚 Proyecto: 
+**Nombre tentativo:** UniTask   
 **Plataforma objetivo:** Navegadores modernos (Chrome, Edge, Firefox, Safari)  
 **Usuarios:** Estudiantes universitarios  
 
