@@ -154,18 +154,12 @@ const LoginPage = () => {
                 : 'Registrarse'}
             </Button>
           </form>
-
-          {/* Demo Credentials */}
-          {isLogin && (
-            <div className="mt-6 pt-6 border-t border-dark-600">
-              <p className="text-sm text-gray-400 text-center mb-2">
-                Credenciales de demostración:
-              </p>
-              <p className="text-xs text-gray-500 text-center">
-                Usuario: <span className="text-accent-400">demo</span> / Contraseña: <span className="text-accent-400">demo123</span>
-              </p>
-            </div>
-          )}
+          
+          <br />
+          <p className="text-center text-sm text-gray-400">
+            &copy; {new Date().getFullYear()} UniTask. Todos los derechos reservados.
+          </p>
+          <br />
         </Card>
       </div>
     </div>
