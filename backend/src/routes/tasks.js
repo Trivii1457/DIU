@@ -14,96 +14,7 @@ router.get('/', async (req, res) => {
   }
 });
 
-// Get task by ID
-router.get('/:id', async (req, res) => {
-  try {
-    const result = await query('SELECT * FROM tasks WHERE id = $1', [req.params.id]);
-    if (result.rows.length === 0) {
-      return res.status(404).json({ error: 'Task not found' });
-    }
-    res.json(result.rows[0]);
-  } catch (error) {
-    console.error('Error getting task:', error);
-    res.status(500).json({ error: 'Error getting task' });
-  }
-});
-
-// Get tasks by subject
-router.get('/subject/:subjectId', async (req, res) => {
-  try {
-    const result = await query('SELECT * FROM tasks WHERE subject_id = $1 ORDER BY id', [req.params.subjectId]);
-    res.json(result.rows);
-  } catch (error) {
-    console.error('Error getting tasks by subject:', error);
-    res.status(500).json({ error: 'Error getting tasks by subject' });
-  }
-});
-
-// Get pending tasks
-router.get('/filter/pending', async (req, res) => {
-  try {
-    const result = await query('SELECT * FROM tasks WHERE completed = FALSE ORDER BY id');
-    res.json(result.rows);
-  } catch (error) {
-    console.error('Error getting pending tasks:', error);
-    res.status(500).json({ error: 'Error getting pending tasks' });
-  }
-});
-
-// Get completed tasks
-router.get('/filter/completed', async (req, res) => {
-  try {
-    const result = await query('SELECT * FROM tasks WHERE completed = TRUE ORDER BY id');
-    res.json(result.rows);
-  } catch (error) {
-    console.error('Error getting completed tasks:', error);
-    res.status(500).json({ error: 'Error getting completed tasks' });
-  }
-});
-
-// Get today's tasks
-router.get('/filter/today', async (req, res) => {
-  try {
-    const result = await query(`
-      SELECT * FROM tasks 
-      WHERE due_date >= CURRENT_DATE 
-      AND due_date < CURRENT_DATE + INTERVAL '1 day'
-      ORDER BY id
-    `);
-    res.json(result.rows);
-  } catch (error) {
-    console.error('Error getting today tasks:', error);
-    res.status(500).json({ error: 'Error getting today tasks' });
-  }
-});
-
-// Get tasks by week
-router.get('/filter/week', async (req, res) => {
-  try {
-    const { start, end } = req.query;
-    const result = await query(
-      'SELECT * FROM tasks WHERE due_date >= $1 AND due_date <= $2 ORDER BY id',
-      [start, end]
-    );
-    res.json(result.rows);
-  } catch (error) {
-    console.error('Error getting tasks by week:', error);
-    res.status(500).json({ error: 'Error getting tasks by week' });
-  }
-});
-
-// Get tasks by priority
-router.get('/filter/priority/:priority', async (req, res) => {
-  try {
-    const result = await query('SELECT * FROM tasks WHERE priority = $1 ORDER BY id', [req.params.priority]);
-    res.json(result.rows);
-  } catch (error) {
-    console.error('Error getting tasks by priority:', error);
-    res.status(500).json({ error: 'Error getting tasks by priority' });
-  }
-});
-
-// Get task statistics
+// Get task statistics (MUST be before /:id)
 router.get('/stats/summary', async (req, res) => {
   try {
     const result = await query(`
@@ -134,12 +45,114 @@ router.get('/stats/summary', async (req, res) => {
   }
 });
 
+// Get pending tasks (MUST be before /:id)
+router.get('/filter/pending', async (req, res) => {
+  try {
+    const result = await query('SELECT * FROM tasks WHERE completed = FALSE ORDER BY id');
+    res.json(result.rows);
+  } catch (error) {
+    console.error('Error getting pending tasks:', error);
+    res.status(500).json({ error: 'Error getting pending tasks' });
+  }
+});
+
+// Get completed tasks (MUST be before /:id)
+router.get('/filter/completed', async (req, res) => {
+  try {
+    const result = await query('SELECT * FROM tasks WHERE completed = TRUE ORDER BY id');
+    res.json(result.rows);
+  } catch (error) {
+    console.error('Error getting completed tasks:', error);
+    res.status(500).json({ error: 'Error getting completed tasks' });
+  }
+});
+
+// Get today's tasks (MUST be before /:id)
+router.get('/filter/today', async (req, res) => {
+  try {
+    const result = await query(`
+      SELECT * FROM tasks 
+      WHERE due_date >= CURRENT_DATE 
+      AND due_date < CURRENT_DATE + INTERVAL '1 day'
+      ORDER BY id
+    `);
+    res.json(result.rows);
+  } catch (error) {
+    console.error('Error getting today tasks:', error);
+    res.status(500).json({ error: 'Error getting today tasks' });
+  }
+});
+
+// Get tasks by week (MUST be before /:id)
+router.get('/filter/week', async (req, res) => {
+  try {
+    const { start, end } = req.query;
+    const result = await query(
+      'SELECT * FROM tasks WHERE due_date >= $1 AND due_date <= $2 ORDER BY id',
+      [start, end]
+    );
+    res.json(result.rows);
+  } catch (error) {
+    console.error('Error getting tasks by week:', error);
+    res.status(500).json({ error: 'Error getting tasks by week' });
+  }
+});
+
+// Get tasks by priority (MUST be before /:id)
+router.get('/filter/priority/:priority', async (req, res) => {
+  try {
+    const result = await query('SELECT * FROM tasks WHERE priority = $1 ORDER BY id', [req.params.priority]);
+    res.json(result.rows);
+  } catch (error) {
+    console.error('Error getting tasks by priority:', error);
+    res.status(500).json({ error: 'Error getting tasks by priority' });
+  }
+});
+
+// Search tasks (MUST be before /:id)
+router.get('/search/:query', async (req, res) => {
+  try {
+    const result = await query(
+      'SELECT * FROM tasks WHERE LOWER(title) LIKE LOWER($1) OR LOWER(description) LIKE LOWER($1) ORDER BY id',
+      [`%${req.params.query}%`]
+    );
+    res.json(result.rows);
+  } catch (error) {
+    console.error('Error searching tasks:', error);
+    res.status(500).json({ error: 'Error searching tasks' });
+  }
+});
+
+// Get tasks by subject (MUST be before /:id)
+router.get('/subject/:subjectId', async (req, res) => {
+  try {
+    const result = await query('SELECT * FROM tasks WHERE subject_id = $1 ORDER BY id', [req.params.subjectId]);
+    res.json(result.rows);
+  } catch (error) {
+    console.error('Error getting tasks by subject:', error);
+    res.status(500).json({ error: 'Error getting tasks by subject' });
+  }
+});
+
+// Get task by ID (MUST be after all specific routes)
+router.get('/:id', async (req, res) => {
+  try {
+    const result = await query('SELECT * FROM tasks WHERE id = $1', [req.params.id]);
+    if (result.rows.length === 0) {
+      return res.status(404).json({ error: 'Task not found' });
+    }
+    res.json(result.rows[0]);
+  } catch (error) {
+    console.error('Error getting task:', error);
+    res.status(500).json({ error: 'Error getting task' });
+  }
+});
+
 // Create task
 router.post('/', async (req, res) => {
   try {
     const { title, description, subject_id, priority, due_date, completed } = req.body;
     
-    // Validate required fields
     if (!title) {
       return res.status(400).json({ error: 'Title is required' });
     }
@@ -152,6 +165,40 @@ router.post('/', async (req, res) => {
   } catch (error) {
     console.error('Error creating task:', error);
     res.status(500).json({ error: 'Error creating task' });
+  }
+});
+
+// Mark task as completed (MUST be before /:id PUT)
+router.put('/:id/complete', async (req, res) => {
+  try {
+    const result = await query(
+      'UPDATE tasks SET completed = TRUE, updated_at = CURRENT_TIMESTAMP WHERE id = $1 RETURNING *',
+      [req.params.id]
+    );
+    if (result.rows.length === 0) {
+      return res.status(404).json({ error: 'Task not found' });
+    }
+    res.json(result.rows[0]);
+  } catch (error) {
+    console.error('Error completing task:', error);
+    res.status(500).json({ error: 'Error completing task' });
+  }
+});
+
+// Mark task as pending (MUST be before /:id PUT)
+router.put('/:id/pending', async (req, res) => {
+  try {
+    const result = await query(
+      'UPDATE tasks SET completed = FALSE, updated_at = CURRENT_TIMESTAMP WHERE id = $1 RETURNING *',
+      [req.params.id]
+    );
+    if (result.rows.length === 0) {
+      return res.status(404).json({ error: 'Task not found' });
+    }
+    res.json(result.rows[0]);
+  } catch (error) {
+    console.error('Error marking task as pending:', error);
+    res.status(500).json({ error: 'Error marking task as pending' });
   }
 });
 
@@ -182,40 +229,6 @@ router.put('/:id', async (req, res) => {
   }
 });
 
-// Mark task as completed
-router.put('/:id/complete', async (req, res) => {
-  try {
-    const result = await query(
-      'UPDATE tasks SET completed = TRUE, updated_at = CURRENT_TIMESTAMP WHERE id = $1 RETURNING *',
-      [req.params.id]
-    );
-    if (result.rows.length === 0) {
-      return res.status(404).json({ error: 'Task not found' });
-    }
-    res.json(result.rows[0]);
-  } catch (error) {
-    console.error('Error completing task:', error);
-    res.status(500).json({ error: 'Error completing task' });
-  }
-});
-
-// Mark task as pending
-router.put('/:id/pending', async (req, res) => {
-  try {
-    const result = await query(
-      'UPDATE tasks SET completed = FALSE, updated_at = CURRENT_TIMESTAMP WHERE id = $1 RETURNING *',
-      [req.params.id]
-    );
-    if (result.rows.length === 0) {
-      return res.status(404).json({ error: 'Task not found' });
-    }
-    res.json(result.rows[0]);
-  } catch (error) {
-    console.error('Error marking task as pending:', error);
-    res.status(500).json({ error: 'Error marking task as pending' });
-  }
-});
-
 // Delete task
 router.delete('/:id', async (req, res) => {
   try {
@@ -227,20 +240,6 @@ router.delete('/:id', async (req, res) => {
   } catch (error) {
     console.error('Error deleting task:', error);
     res.status(500).json({ error: 'Error deleting task' });
-  }
-});
-
-// Search tasks
-router.get('/search/:query', async (req, res) => {
-  try {
-    const result = await query(
-      'SELECT * FROM tasks WHERE LOWER(title) LIKE LOWER($1) OR LOWER(description) LIKE LOWER($1) ORDER BY id',
-      [`%${req.params.query}%`]
-    );
-    res.json(result.rows);
-  } catch (error) {
-    console.error('Error searching tasks:', error);
-    res.status(500).json({ error: 'Error searching tasks' });
   }
 });
 

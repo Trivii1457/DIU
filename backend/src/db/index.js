@@ -46,7 +46,7 @@ export const initializeDatabase = async () => {
         updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
       );
     `);
-
+    /*
     // Check if demo user exists
     const usersResult = await pool.query('SELECT COUNT(*) FROM users');
     if (parseInt(usersResult.rows[0].count) === 0) {
@@ -96,7 +96,7 @@ export const initializeDatabase = async () => {
           [task.title, task.description, task.subjectId, task.priority, dueDate, task.completed]
         );
       }
-    }
+    }*/
 
     console.log('Database initialized successfully');
   } catch (error) {
