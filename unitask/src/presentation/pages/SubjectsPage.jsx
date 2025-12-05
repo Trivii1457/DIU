@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { SubjectRepository } from '../../data/repositories';
 import { Card, Button, Input, Modal } from '../components/common';
+import { useToast } from '../../context/ToastContext';
 
 const SubjectsPage = () => {
   const [subjects, setSubjects] = useState([]);
@@ -13,6 +14,7 @@ const SubjectsPage = () => {
     icon: '📚'
   });
   const [errors, setErrors] = useState({});
+  const { success, error: showError } = useToast();
 
   useEffect(() => {
     loadSubjects();
@@ -23,8 +25,9 @@ const SubjectsPage = () => {
       setLoading(true);
       const data = await SubjectRepository.getActive();
       setSubjects(data);
-    } catch (error) {
-      console.error('Error al cargar materias:', error);
+    } catch (err) {
+      console.error('Error al cargar materias:', err);
+      showError('Error al cargar las materias');
     } finally {
       setLoading(false);
     }
@@ -88,6 +91,7 @@ const SubjectsPage = () => {
           color: formData.color,
           icon: formData.icon
         });
+        success('Materia actualizada correctamente');
       } else {
         await SubjectRepository.create({
           name: formData.name,
@@ -95,11 +99,13 @@ const SubjectsPage = () => {
           icon: formData.icon,
           archived: false
         });
+        success('¡Materia creada exitosamente!');
       }
       loadSubjects();
       handleCloseModal();
-    } catch (error) {
-      console.error('Error al guardar materia:', error);
+    } catch (err) {
+      console.error('Error al guardar materia:', err);
+      showError('Error al guardar la materia');
     }
   };
 
@@ -108,8 +114,10 @@ const SubjectsPage = () => {
       try {
         await SubjectRepository.delete(id);
         loadSubjects();
-      } catch (error) {
-        console.error('Error al eliminar materia:', error);
+        success('Materia eliminada correctamente');
+      } catch (err) {
+        console.error('Error al eliminar materia:', err);
+        showError('Error al eliminar la materia');
       }
     }
   };

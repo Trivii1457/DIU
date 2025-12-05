@@ -13,6 +13,7 @@ const transformTask = (task) => {
     priority: task.priority,
     dueDate: task.due_date ? new Date(task.due_date) : null,
     completed: task.completed,
+    status: task.status || (task.completed ? 'completed' : 'pending'),
     createdAt: task.created_at ? new Date(task.created_at) : null,
     updatedAt: task.updated_at ? new Date(task.updated_at) : null
   };
@@ -114,6 +115,7 @@ export class TaskRepository {
     if (updates.priority !== undefined) updateData.priority = updates.priority;
     if (updates.dueDate !== undefined) updateData.due_date = updates.dueDate;
     if (updates.completed !== undefined) updateData.completed = updates.completed;
+    if (updates.status !== undefined) updateData.status = updates.status;
     
     const task = await apiClient.put(`/tasks/${id}`, updateData);
     return transformTask(task);

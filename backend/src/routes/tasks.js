@@ -151,15 +151,15 @@ router.get('/:id', async (req, res) => {
 // Create task
 router.post('/', async (req, res) => {
   try {
-    const { title, description, subject_id, priority, due_date, completed } = req.body;
+    const { title, description, subject_id, priority, due_date, completed, status } = req.body;
     
     if (!title) {
       return res.status(400).json({ error: 'Title is required' });
     }
     
     const result = await query(
-      'INSERT INTO tasks (title, description, subject_id, priority, due_date, completed) VALUES ($1, $2, $3, $4, $5, $6) RETURNING *',
-      [title, description || '', subject_id || null, priority || 'medium', due_date || null, completed || false]
+      'INSERT INTO tasks (title, description, subject_id, priority, due_date, completed, status) VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING *',
+      [title, description || '', subject_id || null, priority || 'medium', due_date || null, completed || false, status || 'pending']
     );
     res.status(201).json(result.rows[0]);
   } catch (error) {
@@ -172,8 +172,8 @@ router.post('/', async (req, res) => {
 router.put('/:id/complete', async (req, res) => {
   try {
     const result = await query(
-      'UPDATE tasks SET completed = TRUE, updated_at = CURRENT_TIMESTAMP WHERE id = $1 RETURNING *',
-      [req.params.id]
+      'UPDATE tasks SET completed = TRUE, status = $1, updated_at = CURRENT_TIMESTAMP WHERE id = $2 RETURNING *',
+      ['completed', req.params.id]
     );
     if (result.rows.length === 0) {
       return res.status(404).json({ error: 'Task not found' });
@@ -189,8 +189,8 @@ router.put('/:id/complete', async (req, res) => {
 router.put('/:id/pending', async (req, res) => {
   try {
     const result = await query(
-      'UPDATE tasks SET completed = FALSE, updated_at = CURRENT_TIMESTAMP WHERE id = $1 RETURNING *',
-      [req.params.id]
+      'UPDATE tasks SET completed = FALSE, status = $1, updated_at = CURRENT_TIMESTAMP WHERE id = $2 RETURNING *',
+      ['pending', req.params.id]
     );
     if (result.rows.length === 0) {
       return res.status(404).json({ error: 'Task not found' });
@@ -205,7 +205,7 @@ router.put('/:id/pending', async (req, res) => {
 // Update task
 router.put('/:id', async (req, res) => {
   try {
-    const { title, description, subject_id, priority, due_date, completed } = req.body;
+    const { title, description, subject_id, priority, due_date, completed, status } = req.body;
     
     const result = await query(
       `UPDATE tasks SET 
@@ -215,9 +215,10 @@ router.put('/:id', async (req, res) => {
         priority = COALESCE($4, priority), 
         due_date = COALESCE($5, due_date), 
         completed = COALESCE($6, completed),
+        status = COALESCE($7, status),
         updated_at = CURRENT_TIMESTAMP 
-      WHERE id = $7 RETURNING *`,
-      [title, description, subject_id, priority, due_date, completed, req.params.id]
+      WHERE id = $8 RETURNING *`,
+      [title, description, subject_id, priority, due_date, completed, status, req.params.id]
     );
     if (result.rows.length === 0) {
       return res.status(404).json({ error: 'Task not found' });

@@ -1,6 +1,7 @@
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import { AuthProvider, useAuth } from './context/AuthContext';
 import { ThemeProvider } from './context/ThemeContext';
+import { ToastProvider } from './context/ToastContext';
 
 // Pages
 import LoginPage from './presentation/pages/LoginPage';
@@ -10,6 +11,7 @@ import TasksPage from './presentation/pages/TasksPage';
 import SubjectsPage from './presentation/pages/SubjectsPage';
 import CalendarPage from './presentation/pages/CalendarPage';
 import StatisticsPage from './presentation/pages/StatisticsPage';
+import KanbanPage from './presentation/pages/KanbanPage';
 
 // Layout
 import Layout from './presentation/components/layout/Layout';
@@ -105,6 +107,16 @@ const AppRoutes = () => {
           </ProtectedRoute>
         }
       />
+      <Route
+        path="/kanban"
+        element={
+          <ProtectedRoute>
+            <Layout>
+              <KanbanPage />
+            </Layout>
+          </ProtectedRoute>
+        }
+      />
 
       {/* Catch all - redirect to home */}
       <Route path="*" element={<Navigate to="/" replace />} />
@@ -116,11 +128,13 @@ function App() {
   return (
     <Router>
       <ThemeProvider>
-        <AuthProvider>
-          <div className="min-h-screen bg-gray-100 dark:bg-dark-900 transition-colors duration-300">
-            <AppRoutes />
-          </div>
-        </AuthProvider>
+        <ToastProvider>
+          <AuthProvider>
+            <div className="min-h-screen bg-gray-100 dark:bg-dark-900 transition-colors duration-300">
+              <AppRoutes />
+            </div>
+          </AuthProvider>
+        </ToastProvider>
       </ThemeProvider>
     </Router>
   );

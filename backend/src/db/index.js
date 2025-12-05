@@ -42,9 +42,20 @@ export const initializeDatabase = async () => {
         priority VARCHAR(50) DEFAULT 'medium',
         due_date TIMESTAMP,
         completed BOOLEAN DEFAULT FALSE,
+        status VARCHAR(50) DEFAULT 'pending',
         created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
         updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
       );
+    `);
+
+    // Add status column if it doesn't exist (for existing databases)
+    await pool.query(`
+      DO $$ 
+      BEGIN 
+        IF NOT EXISTS (SELECT 1 FROM information_schema.columns WHERE table_name='tasks' AND column_name='status') THEN
+          ALTER TABLE tasks ADD COLUMN status VARCHAR(50) DEFAULT 'pending';
+        END IF;
+      END $$;
     `);
     /*
     // Check if demo user exists

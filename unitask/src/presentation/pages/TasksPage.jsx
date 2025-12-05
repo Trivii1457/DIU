@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { TaskRepository, SubjectRepository } from '../../data/repositories';
 import { Button, Card } from '../components/common';
 import { formatDate } from '../../infrastructure/utils/helpers';
+import { useToast } from '../../context/ToastContext';
 import TaskFormModal from '../components/tasks/TaskFormModal';
 
 const TasksPage = () => {
@@ -10,6 +11,7 @@ const TasksPage = () => {
   const [loading, setLoading] = useState(true);
   const [showTaskForm, setShowTaskForm] = useState(false);
   const [filter, setFilter] = useState('all'); // all, pending, completed
+  const { success, error: showError } = useToast();
 
   useEffect(() => {
     loadData();
@@ -25,8 +27,9 @@ const TasksPage = () => {
 
       setTasks(tasksData);
       setSubjects(subjectsData);
-    } catch (error) {
-      console.error('Error al cargar datos:', error);
+    } catch (err) {
+      console.error('Error al cargar datos:', err);
+      showError('Error al cargar las tareas');
     } finally {
       setLoading(false);
     }
@@ -36,12 +39,15 @@ const TasksPage = () => {
     try {
       if (currentStatus) {
         await TaskRepository.markAsPending(taskId);
+        success('Tarea marcada como pendiente');
       } else {
         await TaskRepository.markAsCompleted(taskId);
+        success('¡Tarea completada! 🎉');
       }
       loadData();
-    } catch (error) {
-      console.error('Error al actualizar tarea:', error);
+    } catch (err) {
+      console.error('Error al actualizar tarea:', err);
+      showError('Error al actualizar la tarea');
     }
   };
 
@@ -50,8 +56,10 @@ const TasksPage = () => {
       try {
         await TaskRepository.delete(taskId);
         loadData();
-      } catch (error) {
-        console.error('Error al eliminar tarea:', error);
+        success('Tarea eliminada correctamente');
+      } catch (err) {
+        console.error('Error al eliminar tarea:', err);
+        showError('Error al eliminar la tarea');
       }
     }
   };
@@ -213,7 +221,10 @@ const TasksPage = () => {
       <TaskFormModal
         isOpen={showTaskForm}
         onClose={() => setShowTaskForm(false)}
-        onTaskCreated={loadData}
+        onTaskCreated={() => {
+          loadData();
+          success('¡Tarea creada exitosamente!');
+        }}
         subjects={subjects}
       />
     </div>

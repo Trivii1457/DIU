@@ -20,6 +20,11 @@ const Sidebar = ({ isCollapsed, onToggleCollapse }) => {
       icon: '📚'
     },
     {
+      path: '/kanban',
+      label: 'Tablero Tareas',
+      icon: '📋'
+    },
+    {
       path: '/calendar',
       label: 'Calendario',
       icon: '📅'
