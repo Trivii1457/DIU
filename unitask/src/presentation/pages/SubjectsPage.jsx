@@ -131,7 +131,7 @@ const SubjectsPage = () => {
       <div className="flex items-center justify-center min-h-screen">
         <div className="text-center">
           <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-accent-500 mx-auto mb-4"></div>
-          <p className="text-gray-400">Cargando...</p>
+          <p className="text-gray-600 dark:text-gray-400">Cargando...</p>
         </div>
       </div>
     );
@@ -142,10 +142,10 @@ const SubjectsPage = () => {
       {/* Header */}
       <div className="flex items-center justify-between mb-8">
         <div>
-          <h1 className="text-4xl font-bold text-gray-100 mb-2">
+          <h1 className="text-4xl font-bold text-gray-900 dark:text-gray-100 mb-2">
             📚 Materias
           </h1>
-          <p className="text-gray-400">
+          <p className="text-gray-600 dark:text-gray-400">
             Administra tus materias académicas
           </p>
         </div>
@@ -159,7 +159,7 @@ const SubjectsPage = () => {
         <Card>
           <div className="text-center py-12">
             <div className="text-6xl mb-4">📚</div>
-            <p className="text-gray-400 mb-4">
+            <p className="text-gray-600 dark:text-gray-400 mb-4">
               No tienes materias registradas
             </p>
             <Button onClick={() => handleOpenModal()}>
@@ -179,10 +179,10 @@ const SubjectsPage = () => {
                   {subject.icon || '📚'}
                 </div>
                 <div className="flex-1 min-w-0">
-                  <h3 className="font-semibold text-gray-100 text-lg mb-1 truncate">
+                  <h3 className="font-semibold text-gray-900 dark:text-gray-100 text-lg mb-1 truncate">
                     {subject.name}
                   </h3>
-                  <p className="text-sm text-gray-400">
+                  <p className="text-sm text-gray-600 dark:text-gray-400">
                     Creada el {new Date(subject.createdAt).toLocaleDateString('es-ES')}
                   </p>
                   <div className="flex gap-2 mt-3">
@@ -223,7 +223,7 @@ const SubjectsPage = () => {
           />
 
           <div>
-            <label className="block text-sm font-medium text-gray-300 mb-3">
+            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-3">
               Ícono
             </label>
             <div className="grid grid-cols-6 gap-2">
@@ -235,7 +235,7 @@ const SubjectsPage = () => {
                   className={`p-3 text-2xl rounded-lg border-2 transition-all ${
                     formData.icon === icon
                       ? 'border-accent-500 bg-accent-500/20'
-                      : 'border-dark-600 hover:border-dark-500'
+                      : 'border-gray-200 dark:border-dark-600 hover:border-gray-300 dark:hover:border-dark-500'
                   }`}
                 >
                   {icon}
@@ -245,7 +245,7 @@ const SubjectsPage = () => {
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-gray-300 mb-3">
+            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-3">
               Color
             </label>
             <div className="grid grid-cols-4 gap-2">
@@ -257,7 +257,7 @@ const SubjectsPage = () => {
                   className={`p-3 rounded-lg border-2 transition-all ${
                     formData.color === color.value
                       ? 'border-accent-500 scale-105'
-                      : 'border-dark-600 hover:border-dark-500'
+                      : 'border-gray-200 dark:border-dark-600 hover:border-gray-300 dark:hover:border-dark-500'
                   }`}
                   style={{ backgroundColor: color.value }}
                   title={color.name}

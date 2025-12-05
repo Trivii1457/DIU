@@ -20,14 +20,14 @@ export const Button = ({
   type = 'button',
   ...props 
 }) => {
-  const baseStyles = 'inline-flex items-center justify-center font-medium rounded-lg transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-dark-900 disabled:opacity-50 disabled:cursor-not-allowed';
+  const baseStyles = 'inline-flex items-center justify-center font-medium rounded-lg transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-white dark:focus:ring-offset-dark-900 disabled:opacity-50 disabled:cursor-not-allowed';
   
   const variants = {
     primary: 'bg-accent-500 text-white hover:bg-accent-600 focus:ring-accent-500 shadow-md',
-    secondary: 'bg-dark-500 text-gray-100 hover:bg-dark-400 focus:ring-dark-400 border border-dark-400',
+    secondary: 'bg-gray-200 dark:bg-dark-500 text-gray-800 dark:text-gray-100 hover:bg-gray-300 dark:hover:bg-dark-400 focus:ring-gray-400 dark:focus:ring-dark-400 border border-gray-300 dark:border-dark-400',
     success: 'bg-success-500 text-white hover:bg-success-600 focus:ring-success-500 shadow-md',
     danger: 'bg-danger-500 text-white hover:bg-danger-600 focus:ring-danger-500 shadow-md',
-    outline: 'border-2 border-accent-500 text-accent-400 hover:bg-dark-700 focus:ring-accent-500',
+    outline: 'border-2 border-accent-500 text-accent-500 dark:text-accent-400 hover:bg-gray-100 dark:hover:bg-dark-700 focus:ring-accent-500',
   };
   
   const sizes = {

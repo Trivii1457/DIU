@@ -44,7 +44,7 @@ const WelcomePage = () => {
       <div className="flex items-center justify-center min-h-screen">
         <div className="text-center">
           <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-accent-500 mx-auto mb-4"></div>
-          <p className="text-gray-400">Cargando...</p>
+          <p className="text-gray-600 dark:text-gray-400">Cargando...</p>
         </div>
       </div>
     );
@@ -61,10 +61,10 @@ const WelcomePage = () => {
     <div className="container mx-auto px-4 py-8 max-w-7xl">
       {/* Welcome Header */}
       <section className="mb-12">
-        <h1 className="text-4xl font-bold text-gray-100 mb-2">
+        <h1 className="text-4xl font-bold text-gray-900 dark:text-gray-100 mb-2">
           {getGreeting()}, {user?.name || user?.username}! 👋
         </h1>
-        <p className="text-gray-400 text-lg">
+        <p className="text-gray-600 dark:text-gray-400 text-lg">
           Bienvenido a tu espacio de gestión académica
         </p>
       </section>
@@ -126,7 +126,7 @@ const WelcomePage = () => {
 
       {/* Quick Actions */}
       <section className="mb-12">
-        <h2 className="text-2xl font-bold text-gray-100 mb-6">
+        <h2 className="text-2xl font-bold text-gray-900 dark:text-gray-100 mb-6">
           🚀 Accesos Rápidos
         </h2>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
@@ -134,10 +134,10 @@ const WelcomePage = () => {
             <Card hover className="h-full cursor-pointer">
               <div className="text-center p-4">
                 <div className="text-5xl mb-4">📋</div>
-                <h3 className="text-xl font-semibold text-gray-100 mb-2">
+                <h3 className="text-xl font-semibold text-gray-900 dark:text-gray-100 mb-2">
                   Mis Tareas
                 </h3>
-                <p className="text-sm text-gray-400">
+                <p className="text-sm text-gray-600 dark:text-gray-400">
                   Gestiona tus tareas y proyectos
                 </p>
               </div>
@@ -148,10 +148,10 @@ const WelcomePage = () => {
             <Card hover className="h-full cursor-pointer">
               <div className="text-center p-4">
                 <div className="text-5xl mb-4">📚</div>
-                <h3 className="text-xl font-semibold text-gray-100 mb-2">
+                <h3 className="text-xl font-semibold text-gray-900 dark:text-gray-100 mb-2">
                   Materias
                 </h3>
-                <p className="text-sm text-gray-400">
+                <p className="text-sm text-gray-600 dark:text-gray-400">
                   Administra tus materias
                 </p>
               </div>
@@ -162,10 +162,10 @@ const WelcomePage = () => {
             <Card hover className="h-full cursor-pointer">
               <div className="text-center p-4">
                 <div className="text-5xl mb-4">📅</div>
-                <h3 className="text-xl font-semibold text-gray-100 mb-2">
+                <h3 className="text-xl font-semibold text-gray-900 dark:text-gray-100 mb-2">
                   Calendario
                 </h3>
-                <p className="text-sm text-gray-400">
+                <p className="text-sm text-gray-600 dark:text-gray-400">
                   Visualiza tus próximas entregas
                 </p>
               </div>
@@ -177,7 +177,7 @@ const WelcomePage = () => {
       {/* Recent Tasks */}
       <section className="mb-12">
         <div className="flex items-center justify-between mb-6">
-          <h2 className="text-2xl font-bold text-gray-100">
+          <h2 className="text-2xl font-bold text-gray-900 dark:text-gray-100">
             📝 Tareas Recientes
           </h2>
           <Link to="/academic/tasks">
@@ -189,7 +189,7 @@ const WelcomePage = () => {
 
         {recentTasks.length === 0 ? (
           <Card>
-            <p className="text-center text-gray-400 py-8">
+            <p className="text-center text-gray-600 dark:text-gray-400 py-8">
               No tienes tareas pendientes 🎉
             </p>
           </Card>
@@ -199,10 +199,10 @@ const WelcomePage = () => {
               <Card key={task.id} hover>
                 <div className="flex items-center justify-between">
                   <div>
-                    <h3 className="font-semibold text-gray-100">
+                    <h3 className="font-semibold text-gray-900 dark:text-gray-100">
                       {task.title}
                     </h3>
-                    <p className="text-sm text-gray-400 mt-1">
+                    <p className="text-sm text-gray-600 dark:text-gray-400 mt-1">
                       {new Date(task.dueDate).toLocaleDateString('es-ES', {
                         day: 'numeric',
                         month: 'long',
@@ -236,10 +236,10 @@ const WelcomePage = () => {
       <section>
         <Card className="bg-gradient-to-br from-accent-500/10 to-purple-500/10 border-accent-500/20">
           <div className="text-center p-6">
-            <p className="text-xl text-gray-100 mb-2 font-medium">
+            <p className="text-xl text-gray-900 dark:text-gray-100 mb-2 font-medium">
               💡 "El éxito es la suma de pequeños esfuerzos repetidos día tras día"
             </p>
-            <p className="text-sm text-gray-400">
+            <p className="text-sm text-gray-600 dark:text-gray-400">
               ¡Sigue así, vas por buen camino!
             </p>
           </div>

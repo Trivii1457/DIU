@@ -83,13 +83,13 @@ export const TaskFormModal = ({ isOpen, onClose, onTaskCreated, subjects }) => {
         />
 
         <div>
-          <label className="block text-sm font-medium text-gray-300 mb-2">
+          <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
             Materia <span className="text-danger-500 ml-1">*</span>
           </label>
           <select
             value={formData.subjectId}
             onChange={(e) => handleChange('subjectId', parseInt(e.target.value))}
-            className="w-full px-4 py-2 bg-dark-800 border border-dark-500 rounded-lg text-gray-100 focus:outline-none focus:ring-2 focus:ring-accent-500 focus:border-accent-500"
+            className="w-full px-4 py-2 bg-gray-50 dark:bg-dark-800 border border-gray-300 dark:border-dark-500 rounded-lg text-gray-900 dark:text-gray-100 focus:outline-none focus:ring-2 focus:ring-accent-500 focus:border-accent-500"
           >
             <option value="">Selecciona una materia</option>
             {subjects.map(subject => (
@@ -104,13 +104,13 @@ export const TaskFormModal = ({ isOpen, onClose, onTaskCreated, subjects }) => {
         </div>
 
         <div>
-          <label className="block text-sm font-medium text-gray-300 mb-2">
+          <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
             Prioridad
           </label>
           <select
             value={formData.priority}
             onChange={(e) => handleChange('priority', e.target.value)}
-            className="w-full px-4 py-2 bg-dark-800 border border-dark-500 rounded-lg text-gray-100 focus:outline-none focus:ring-2 focus:ring-accent-500 focus:border-accent-500"
+            className="w-full px-4 py-2 bg-gray-50 dark:bg-dark-800 border border-gray-300 dark:border-dark-500 rounded-lg text-gray-900 dark:text-gray-100 focus:outline-none focus:ring-2 focus:ring-accent-500 focus:border-accent-500"
           >
             <option value="low">🔵 Baja</option>
             <option value="medium">🟡 Media</option>

@@ -87,14 +87,7 @@
 - Sincronización en la nube (opcional, con login).  
 - Recuperación automática tras reconexión a internet.  
 
----
 
-### 🧑‍💻 h) Instalación como App (PWA)
-- Archivo **manifest.json** para instalación.  
-- Service Worker para manejo de caché y modo offline.  
-- Iconos personalizados y splash screen adaptable.  
-
----
 
 ## 🎨 3. Lineamientos de Diseño (UI/UX)
 
@@ -110,11 +103,11 @@
 
 ---
 
-## 🧠 4. Tecnologías Sugeridas
+## 🧠 4. Tecnologías 
 
 | Categoría | Tecnología |
 |------------|-------------|
-| Frontend | React.js, Vue.js o Svelte |
+| Frontend | React.js |
 | Estilos | Tailwind CSS, CSS Grid/Flexbox |
 | PWA | Service Workers, Manifest.json, Workbox |
 | Almacenamiento local | IndexedDB, LocalStorage |

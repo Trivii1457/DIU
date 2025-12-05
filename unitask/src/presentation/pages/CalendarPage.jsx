@@ -86,15 +86,15 @@ const CalendarPage = () => {
       days.push(
         <div
           key={i}
-          className={`min-h-[120px] border border-dark-700 p-2 ${
-            !isValidDay ? 'bg-dark-800/30' : 'bg-dark-800 hover:bg-dark-700'
+          className={`min-h-[120px] border border-gray-200 dark:border-dark-700 p-2 ${
+            !isValidDay ? 'bg-gray-100/50 dark:bg-dark-800/30' : 'bg-white dark:bg-dark-800 hover:bg-gray-50 dark:hover:bg-dark-700'
           } transition-colors ${isToday ? 'ring-2 ring-accent-500' : ''}`}
         >
           {isValidDay && (
             <>
               <div
                 className={`text-sm font-semibold mb-2 ${
-                  isToday ? 'text-accent-400' : 'text-gray-300'
+                  isToday ? 'text-accent-500 dark:text-accent-400' : 'text-gray-700 dark:text-gray-300'
                 }`}
               >
                 {dayNumber}
@@ -112,7 +112,7 @@ const CalendarPage = () => {
                   </div>
                 ))}
                 {dayTasks.length > 3 && (
-                  <div className="text-xs text-gray-400 px-2">
+                  <div className="text-xs text-gray-500 dark:text-gray-400 px-2">
                     +{dayTasks.length - 3} más
                   </div>
                 )}
@@ -131,7 +131,7 @@ const CalendarPage = () => {
       <div className="flex items-center justify-center min-h-screen">
         <div className="text-center">
           <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-accent-500 mx-auto mb-4"></div>
-          <p className="text-gray-400">Cargando...</p>
+          <p className="text-gray-600 dark:text-gray-400">Cargando...</p>
         </div>
       </div>
     );
@@ -141,10 +141,10 @@ const CalendarPage = () => {
     <div className="container mx-auto px-4 py-8 max-w-7xl">
       {/* Header */}
       <div className="mb-8">
-        <h1 className="text-4xl font-bold text-gray-100 mb-2">
+        <h1 className="text-4xl font-bold text-gray-900 dark:text-gray-100 mb-2">
           📅 Calendario
         </h1>
-        <p className="text-gray-400">
+        <p className="text-gray-600 dark:text-gray-400">
           Visualiza tus tareas organizadas por fecha
         </p>
       </div>
@@ -154,16 +154,16 @@ const CalendarPage = () => {
         <div className="flex items-center justify-between">
           <button
             onClick={() => changeMonth(-1)}
-            className="px-4 py-2 bg-dark-700 text-gray-300 rounded-lg hover:bg-dark-600 transition-colors"
+            className="px-4 py-2 bg-gray-200 dark:bg-dark-700 text-gray-700 dark:text-gray-300 rounded-lg hover:bg-gray-300 dark:hover:bg-dark-600 transition-colors"
           >
             ← Anterior
           </button>
-          <h2 className="text-2xl font-bold text-gray-100 capitalize">
+          <h2 className="text-2xl font-bold text-gray-900 dark:text-gray-100 capitalize">
             {monthName} {year}
           </h2>
           <button
             onClick={() => changeMonth(1)}
-            className="px-4 py-2 bg-dark-700 text-gray-300 rounded-lg hover:bg-dark-600 transition-colors"
+            className="px-4 py-2 bg-gray-200 dark:bg-dark-700 text-gray-700 dark:text-gray-300 rounded-lg hover:bg-gray-300 dark:hover:bg-dark-600 transition-colors"
           >
             Siguiente →
           </button>
@@ -174,15 +174,15 @@ const CalendarPage = () => {
       <div className="flex items-center gap-6 mb-6">
         <div className="flex items-center gap-2">
           <div className="w-4 h-4 bg-danger-500 rounded"></div>
-          <span className="text-sm text-gray-400">Alta prioridad</span>
+          <span className="text-sm text-gray-600 dark:text-gray-400">Alta prioridad</span>
         </div>
         <div className="flex items-center gap-2">
           <div className="w-4 h-4 bg-warning-500 rounded"></div>
-          <span className="text-sm text-gray-400">Media prioridad</span>
+          <span className="text-sm text-gray-600 dark:text-gray-400">Media prioridad</span>
         </div>
         <div className="flex items-center gap-2">
           <div className="w-4 h-4 bg-accent-500 rounded"></div>
-          <span className="text-sm text-gray-400">Baja prioridad</span>
+          <span className="text-sm text-gray-600 dark:text-gray-400">Baja prioridad</span>
         </div>
       </div>
 
@@ -193,7 +193,7 @@ const CalendarPage = () => {
           {['Dom', 'Lun', 'Mar', 'Mié', 'Jue', 'Vie', 'Sáb'].map((day) => (
             <div
               key={day}
-              className="text-center font-semibold text-gray-400 py-2"
+              className="text-center font-semibold text-gray-600 dark:text-gray-400 py-2"
             >
               {day}
             </div>
@@ -205,12 +205,12 @@ const CalendarPage = () => {
 
       {/* Tasks Summary */}
       <Card className="mt-6">
-        <h3 className="text-lg font-semibold text-gray-100 mb-4">
+        <h3 className="text-lg font-semibold text-gray-900 dark:text-gray-100 mb-4">
           Resumen de tareas este mes
         </h3>
         <div className="grid grid-cols-3 gap-4">
           <div className="text-center">
-            <p className="text-3xl font-bold text-accent-400">
+            <p className="text-3xl font-bold text-accent-500 dark:text-accent-400">
               {
                 tasks.filter(
                   (t) =>
@@ -219,10 +219,10 @@ const CalendarPage = () => {
                 ).length
               }
             </p>
-            <p className="text-sm text-gray-400 mt-1">Total</p>
+            <p className="text-sm text-gray-600 dark:text-gray-400 mt-1">Total</p>
           </div>
           <div className="text-center">
-            <p className="text-3xl font-bold text-success-400">
+            <p className="text-3xl font-bold text-success-500 dark:text-success-400">
               {
                 tasks.filter(
                   (t) =>
@@ -232,10 +232,10 @@ const CalendarPage = () => {
                 ).length
               }
             </p>
-            <p className="text-sm text-gray-400 mt-1">Completadas</p>
+            <p className="text-sm text-gray-600 dark:text-gray-400 mt-1">Completadas</p>
           </div>
           <div className="text-center">
-            <p className="text-3xl font-bold text-warning-400">
+            <p className="text-3xl font-bold text-warning-500 dark:text-warning-400">
               {
                 tasks.filter(
                   (t) =>
@@ -245,7 +245,7 @@ const CalendarPage = () => {
                 ).length
               }
             </p>
-            <p className="text-sm text-gray-400 mt-1">Pendientes</p>
+            <p className="text-sm text-gray-600 dark:text-gray-400 mt-1">Pendientes</p>
           </div>
         </div>
       </Card>

@@ -52,21 +52,21 @@ const LoginPage = () => {
   };
 
   return (
-    <div className="min-h-screen bg-dark-900 flex items-center justify-center px-4">
+    <div className="min-h-screen bg-gray-100 dark:bg-dark-900 flex items-center justify-center px-4 transition-colors duration-300">
       <div className="w-full max-w-md">
         {/* Logo and Title */}
         <div className="text-center mb-8">
-          <h1 className="text-5xl font-bold text-gray-100 mb-2">
+          <h1 className="text-5xl font-bold text-gray-900 dark:text-gray-100 mb-2">
             🎓 UniTask
           </h1>
-          <p className="text-gray-400">
+          <p className="text-gray-600 dark:text-gray-400">
             Gestión de tareas académicas
           </p>
         </div>
 
         <Card className="p-8">
           {/* Toggle Login/Register */}
-          <div className="flex mb-6 bg-dark-800 rounded-lg p-1">
+          <div className="flex mb-6 bg-gray-100 dark:bg-dark-800 rounded-lg p-1">
             <button
               onClick={() => {
                 setIsLogin(true);
@@ -75,7 +75,7 @@ const LoginPage = () => {
               className={`flex-1 py-2 rounded-md font-medium transition-all ${
                 isLogin
                   ? 'bg-accent-500 text-white'
-                  : 'text-gray-400 hover:text-gray-300'
+                  : 'text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-300'
               }`}
             >
               Iniciar Sesión
@@ -88,7 +88,7 @@ const LoginPage = () => {
               className={`flex-1 py-2 rounded-md font-medium transition-all ${
                 !isLogin
                   ? 'bg-accent-500 text-white'
-                  : 'text-gray-400 hover:text-gray-300'
+                  : 'text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-300'
               }`}
             >
               Registrarse

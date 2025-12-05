@@ -67,7 +67,7 @@ const TasksPage = () => {
       <div className="flex items-center justify-center min-h-screen">
         <div className="text-center">
           <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-accent-500 mx-auto mb-4"></div>
-          <p className="text-gray-400">Cargando...</p>
+          <p className="text-gray-600 dark:text-gray-400">Cargando...</p>
         </div>
       </div>
     );
@@ -83,7 +83,7 @@ const TasksPage = () => {
             className={`px-4 py-2 rounded-lg font-medium transition-all ${
               filter === 'all'
                 ? 'bg-accent-500 text-white'
-                : 'bg-dark-700 text-gray-400 hover:bg-dark-600'
+                : 'bg-gray-200 dark:bg-dark-700 text-gray-600 dark:text-gray-400 hover:bg-gray-300 dark:hover:bg-dark-600'
             }`}
           >
             Todas ({tasks.length})
@@ -93,7 +93,7 @@ const TasksPage = () => {
             className={`px-4 py-2 rounded-lg font-medium transition-all ${
               filter === 'pending'
                 ? 'bg-accent-500 text-white'
-                : 'bg-dark-700 text-gray-400 hover:bg-dark-600'
+                : 'bg-gray-200 dark:bg-dark-700 text-gray-600 dark:text-gray-400 hover:bg-gray-300 dark:hover:bg-dark-600'
             }`}
           >
             Pendientes ({tasks.filter((t) => !t.completed).length})
@@ -103,7 +103,7 @@ const TasksPage = () => {
             className={`px-4 py-2 rounded-lg font-medium transition-all ${
               filter === 'completed'
                 ? 'bg-accent-500 text-white'
-                : 'bg-dark-700 text-gray-400 hover:bg-dark-600'
+                : 'bg-gray-200 dark:bg-dark-700 text-gray-600 dark:text-gray-400 hover:bg-gray-300 dark:hover:bg-dark-600'
             }`}
           >
             Completadas ({tasks.filter((t) => t.completed).length})
@@ -115,7 +115,7 @@ const TasksPage = () => {
       {/* Tasks List */}
       {filteredTasks.length === 0 ? (
         <Card>
-          <p className="text-center text-gray-400 py-12">
+          <p className="text-center text-gray-600 dark:text-gray-400 py-12">
             {filter === 'all' && 'No tienes tareas registradas'}
             {filter === 'pending' && 'No tienes tareas pendientes 🎉'}
             {filter === 'completed' && 'No tienes tareas completadas'}
@@ -135,7 +135,7 @@ const TasksPage = () => {
                     type="checkbox"
                     checked={task.completed}
                     onChange={() => handleToggleTask(task.id, task.completed)}
-                    className="mt-1 w-5 h-5 text-accent-500 bg-dark-600 border-dark-400 rounded focus:ring-accent-500 focus:ring-offset-dark-900"
+                    className="mt-1 w-5 h-5 text-accent-500 bg-gray-100 dark:bg-dark-600 border-gray-300 dark:border-dark-400 rounded focus:ring-accent-500 focus:ring-offset-white dark:focus:ring-offset-dark-900"
                   />
                   <div className="flex-1">
                     <div className="flex items-start justify-between gap-4">
@@ -143,14 +143,14 @@ const TasksPage = () => {
                         <h3
                           className={`font-semibold text-lg ${
                             task.completed
-                              ? 'line-through text-gray-500'
-                              : 'text-gray-100'
+                              ? 'line-through text-gray-400 dark:text-gray-500'
+                              : 'text-gray-900 dark:text-gray-100'
                           }`}
                         >
                           {task.title}
                         </h3>
                         {task.description && (
-                          <p className="text-sm text-gray-400 mt-1">
+                          <p className="text-sm text-gray-600 dark:text-gray-400 mt-1">
                             {task.description}
                           </p>
                         )}
